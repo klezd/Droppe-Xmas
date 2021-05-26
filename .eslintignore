@@ -1,0 +1,7 @@
+# ignore built files
+build/*.js
+# ignore template files
+*.hbs
+# ignore service worker file
+src/serviceWorker.ts
+*.css
