@@ -1,0 +1,23 @@
+.appRoot {
+  display: grid;
+  grid-template-rows: 1fr 30px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.footer {
+  background-color: rgb(18, 25, 31);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  justify-content: center;
+}
+
+.footer span {
+  color: rgb(199, 197, 209);
+}
+
+.container {
+  overflow: auto;
+  margin-top: 50px;
+}

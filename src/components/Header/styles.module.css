@@ -1,0 +1,42 @@
+.header {
+  background-color: rgb(103, 32, 44);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 50px;
+  transition: top 1s ease-in-out;
+}
+
+.headerUp {
+  top: -50px;
+}
+
+.header span {
+  color: rgb(199, 197, 209);
+}
+
+.header span:hover {
+  color: rgba(199, 197, 209, 0.589);
+}
+
+.pageTitle {
+  font-family: 'CustomFont',
+    'MuseoModerno',
+    cursive;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+
+/** 
+Christmas color palette idea from:
+https: //www.pinterest.com.au/pin/549861435751475198/?d=t&mt=login
+**/

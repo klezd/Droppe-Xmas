@@ -1,26 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import {
+  faShoppingCart,
+  faCopyright,
+  faCaretUp,
+  faCaretDown
+} from '@fortawesome/free-solid-svg-icons';
 
-function App() {
+import Header from './components/Header';
+import Container from './components/Container';
+
+import './App.css';
+import styles from './styles.module.css';
+
+library.add(faShoppingCart, faCopyright, faCaretUp, faCaretDown);
+
+const current = new Date();
+const currentYear = current.getFullYear();
+
+const App = (): React.ReactElement => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={['App', styles.appRoot].join(' ')}>
+      <Header />
+      <div className={styles.container}>
+        <Container />
+      </div>
+      <div className={styles.footer}>
+        <span>
+          Droppe - Klez - {currentYear} &nbsp;
+          <FontAwesomeIcon icon={faCopyright} />
+        </span>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
