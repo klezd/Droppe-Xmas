@@ -1,5 +1,6 @@
 # ignore built files
 build/*.js
+**/dist/*.js
 # ignore template files
 *.hbs
 # ignore service worker file
