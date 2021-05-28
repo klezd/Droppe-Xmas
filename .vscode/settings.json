@@ -4,8 +4,13 @@
   "eslint.run": "onSave",
   "editor.formatOnPaste": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll": true
   },
   "eslint.alwaysShowStatus": true,
-  "compile-hero.disable-compile-files-on-did-save-code": false
+  "compile-hero.disable-compile-files-on-did-save-code": false,
+  "prettier.configPath": ".prettierrc",
+  "editor.formatOnType": true,
+  "html.format.endWithNewline": true,
+  "javascript.format.semicolons": "insert",
+  "typescript.format.semicolons": "insert"
 }
