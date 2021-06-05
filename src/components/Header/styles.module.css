@@ -28,14 +28,28 @@
 }
 
 .pageTitle {
-  font-family: 'CustomFont',
-    'MuseoModerno',
-    cursive;
+  font-family: 'CustomFont', 'MuseoModerno', cursive;
   font-size: 2rem;
   font-weight: 800;
 }
 
+.btnWithText span {
+  margin: 4px;
+  color: rgb(199, 197, 209);
+}
+.btnWithText:hover {
+  cursor: pointer;
+}
 
+.btnWithText:hover span {
+  color: rgba(199, 197, 209, 0.589) !important;
+}
+
+@media screen and (max-width: 600px) {
+  .descriptionCart {
+    display: none;
+  }
+}
 /** 
 Christmas color palette idea from:
 https: //www.pinterest.com.au/pin/549861435751475198/?d=t&mt=login

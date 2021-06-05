@@ -1,4 +1,5 @@
-import { _User, _Cart, _Product } from './types';
+import { _User, _Product, _UserWithCarts } from './types';
+import { groupItemsOfArrayByIndex } from '../utils/array';
 
 export const getUserById = (id: number): Promise<_User> => {
   return fetch(`https://fakestoreapi.com/users/${id}`)
@@ -9,28 +10,32 @@ export const getUserById = (id: number): Promise<_User> => {
     });
 };
 
-const prepareUserAPI = (id: number) =>
+const prepareUserAPI = (id: number | string) =>
   fetch(`https://fakestoreapi.com/users/${id}`);
 
-export const getAllAvailableUsers = async (ids: number[]): Promise<_User[]> => {
-  const allRequests = ids.map((id) => prepareUserAPI(id));
+export const getAllAvailableUsers = (
+  ids: Array<number | string>
+): Promise<_User[]> => {
+  const allRequests = ids.map((id: number | string) => prepareUserAPI(id));
   return Promise.all(allRequests)
     .then((res) => {
       return Promise.all(res.map((res) => res.json()));
     })
     .then((data) => {
-      console.log(data);
       return data;
     });
 };
 
-export const getUserCartByUserId = (id: number): Promise<_Cart> => {
-  return fetch(`https://fakestoreapi.com/carts/user/${id}`)
+export const getAllCarts = (): Promise<{
+  userIds: Array<string | number>;
+  userWithCarts: _UserWithCarts;
+}> => {
+  return fetch('https://fakestoreapi.com/carts')
     .then((res) => res.json())
     .then((data) => {
-      const firstCart = data[0];
-      const { id, userId, date, products } = firstCart;
-      return { id, userId, date, products };
+      const modifiedData = groupItemsOfArrayByIndex(data, 'userId');
+      const userIds = Object.keys(modifiedData);
+      return { userIds, userWithCarts: modifiedData };
     });
 };
 

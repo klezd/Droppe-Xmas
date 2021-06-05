@@ -5,7 +5,8 @@ import {
   faShoppingCart,
   faCopyright,
   faCaretUp,
-  faCaretDown
+  faCaretDown,
+  faQuestion
 } from '@fortawesome/free-solid-svg-icons';
 
 import Header from './components/Header';
@@ -14,21 +15,22 @@ import Container from './components/Container';
 import './App.css';
 import styles from './styles.module.css';
 
-library.add(faShoppingCart, faCopyright, faCaretUp, faCaretDown);
+library.add(faShoppingCart, faCopyright, faCaretUp, faCaretDown, faQuestion);
 
 const current = new Date();
 const currentYear = current.getFullYear();
 
 const App = (): React.ReactElement => {
+  const [totalPrice, setTotalPrice] = React.useState<number>(0);
   return (
     <div className={['App', styles.appRoot].join(' ')}>
-      <Header />
+      <Header price={totalPrice} />
       <div className={styles.container}>
-        <Container />
+        <Container setTotalPrice={setTotalPrice} />
       </div>
       <div className={styles.footer}>
         <span>
-          Droppe - Klez - {currentYear} &nbsp;
+          Klez {currentYear} - Droppe &nbsp;
           <FontAwesomeIcon icon={faCopyright} />
         </span>
       </div>

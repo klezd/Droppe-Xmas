@@ -1,0 +1,94 @@
+.root {
+  margin: 24px auto;
+  display: block;
+  width: 80%;
+}
+
+.titleNav {
+  display: flex;
+  justify-content: space-between;
+  padding: 18px;
+  border: 1px solid rgb(47 8 13 / 20%);
+  color: unset !important;
+  box-shadow: 0px 0px 0px 4px rgb(47 8 13 / 10%),
+    0px 0px 10px 10px rgb(199 197 209 / 80%),
+    0px 0px 10px 10px rgb(199 197 209 / 10%),
+    0px 0px 10px 10px rgb(199 197 209 / 10%),
+    0px 0px 10px 10px rgb(199 197 209 / 30%);
+  text-transform: capitalize;
+}
+
+.titleNav:hover,
+.titleNav.active {
+  cursor: pointer;
+  border: 1px solid rgb(47 8 13 / 40%);
+  box-shadow: 0px 0px 0px 4px rgb(47 8 13 / 30%),
+    inset 0px 0 0 2px rgb(47 8 13 / 30%), 0px 0px 0px 5px rgb(47 8 13 / 30%);
+  background-color: rgb(199, 197, 209);
+  font-weight: 800;
+  color: rgb(188, 63, 71);
+}
+
+.contentPanel.display+.titleNav {
+  box-shadow: unset;
+}
+
+.contentPanel.display:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 6px 1px rgb(199 197 209 / 10%),
+    0px 0px 6px 2px rgb(199 197 209 / 20%),
+    0px 0px 6px 3px rgb(199 197 209 / 30%),
+    0px 0px 6px 4px rgb(199 197 209 / 50%),
+    0px 0px 6px 5px rgb(199 197 209 / 10%) inset;
+}
+
+.contentPanel {
+  padding: 0 18px;
+  background-color: transparent;
+  overflow: hidden;
+  transition: max-height 2s ease-in-out;
+  margin-top: 18px;
+  border-radius: 4px;
+}
+
+.contentPanel.collapse {
+  max-height: 0;
+  height: 0;
+}
+
+.contentPanel.expand {
+  height: auto;
+  max-height: 500px;
+  overflow: scroll;
+  box-shadow: 0px 0px 6px 1px rgb(199 197 209 / 100%),
+    0px 0px 6px 5px rgb(199 197 209 / 10%) inset;
+}
+
+.bottomPanel {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.bottomPanel>div {
+  margin-left: 12px !important;
+}
+
+
+@media only screen and (max-width: 1201px) {
+  .root {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .root {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .titleNav {
+    padding: 8px;
+  }
+}

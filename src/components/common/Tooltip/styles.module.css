@@ -1,0 +1,36 @@
+.element {
+  position: relative;
+}
+
+.description {
+  position: absolute;
+  width: max-content;
+  display: none;
+  padding: 8px;
+  transition: all 0.25s linear;
+  background: rgb(199, 197, 209);
+  border-radius: 5px;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+  border: solid 1px rgb(200, 200, 200);
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  word-wrap: break-word;
+  z-index: 1000;
+}
+
+.description.hoverable:hover {
+  cursor: pointer;
+}
+
+.element:hover .description,
+.element.clicked .description {
+  height: auto;
+  opacity: 1;
+  display: block;
+}
+
+@media screen and (max-width: 600px) {
+  .description {
+    max-width: 300px !important;
+  }
+}

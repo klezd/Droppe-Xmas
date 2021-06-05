@@ -16,9 +16,14 @@ export type _Cart = {
   products: Array<_ProductInCart>;
 };
 
+export type _UserWithCarts = IAMap<_Cart>;
+
+export type _UserWithCart = IMap<_Cart>;
+
 export type _ProductInCart = {
   productId: number;
   quantity: number;
+  price?: number;
 };
 
 export type _Product = {
@@ -29,3 +34,11 @@ export type _Product = {
   category: string;
   image: string;
 };
+
+export interface IAMap<TValue> {
+  [id: string]: Array<TValue>;
+}
+
+export interface IMap<TValue> {
+  [id: string]: TValue;
+}

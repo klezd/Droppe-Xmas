@@ -5,3 +5,8 @@
   flex-direction: column;
   align-items: center;
 }
+.root > div {
+  width: inherit;
+}
+.cartsContainer {
+}
