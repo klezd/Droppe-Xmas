@@ -1,6 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import ReactDOM from 'react-dom';
+
 import { updateCart } from '../../requests';
 import { _UserWithCart } from '../../requests/types';
 import ConfirmContent from './ConfirmContent';

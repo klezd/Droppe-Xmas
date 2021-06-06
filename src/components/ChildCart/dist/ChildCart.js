@@ -42,6 +42,7 @@ var react_fontawesome_1 = require("@fortawesome/react-fontawesome");
 var requests_1 = require("../../requests");
 var Tooltip_1 = require("../common/Tooltip");
 var ProductLine_1 = require("../common/ProductLine");
+var Loader_1 = require("../common/Loader");
 var childcart_module_css_1 = require("./childcart.module.css");
 var ChildCart = function (props) {
     var childId = props.childId, childName = props.childName, cart = props.cart, onUpdateCart = props.onUpdateCart;
@@ -141,7 +142,7 @@ var ChildCart = function (props) {
                     react_1["default"].createElement(react_fontawesome_1.FontAwesomeIcon, { icon: panelOpen ? free_solid_svg_icons_1.faCaretUp : free_solid_svg_icons_1.faCaretDown }))), description: "Open to view cart", position: { top: 10, left: 270 }, toolTipAction: function () { return toggleCollapse(); } }),
         react_1["default"].createElement("div", { className: !panelOpen
                 ? [childcart_module_css_1["default"].contentPanel, childcart_module_css_1["default"].collapse].join(' ')
-                : [childcart_module_css_1["default"].contentPanel, childcart_module_css_1["default"].expand].join(' ') }, loading || Object.keys(products).length === 0 ? (react_1["default"].createElement("div", null, " Loading")) : (react_1["default"].createElement("div", null,
+                : [childcart_module_css_1["default"].contentPanel, childcart_module_css_1["default"].expand].join(' ') }, loading || Object.keys(products).length === 0 ? (react_1["default"].createElement(Loader_1["default"], null)) : (react_1["default"].createElement("div", null,
             cart.products.map(function (PIC, i) {
                 if (products[PIC.productId]) {
                     var _a = products[PIC.productId], id_1 = _a.id, title_1 = _a.title, price_1 = _a.price, description = _a.description, image_1 = _a.image;

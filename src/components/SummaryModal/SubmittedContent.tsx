@@ -1,5 +1,6 @@
 import React from 'react';
 import { _Cart, _ProductInCart, _UserWithCart } from '../../requests/types';
+import Loader from '../common/Loader';
 
 import styles from './styles.module.css';
 
@@ -14,7 +15,7 @@ const SubmittedContent = (props: _Props): React.ReactElement => {
   return (
     <div className={styles.contentRoot}>
       {props.loading ? (
-        <>Loading</>
+        <Loader />
       ) : (
         <>
           <div className={styles.singleChildInfo}>

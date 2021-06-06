@@ -8,7 +8,9 @@ import { getFirstValueOfItemInObject } from '../../utils/array';
 import { GetPriceWithDiscountForCarts } from '../../utils/cart';
 
 import SummaryModal from '../SummaryModal';
+
 import Modal from '../common/Modal';
+import Loader from '../common/Loader';
 import styles from './styles.module.css';
 
 type _Props = {
@@ -87,7 +89,7 @@ const Container = (props: _Props): React.ReactElement => {
         gift. Click here if you have any struggles!
       </p>
       {loading ? (
-        <div>Loading...</div>
+        <Loader />
       ) : (
         <div className={styles.cartsContainer}>
           {users.map((u: _User, i: number) => {

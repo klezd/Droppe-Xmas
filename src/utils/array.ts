@@ -31,6 +31,7 @@ export function groupItemsOfArrayByIndex(
     for (let i = 0; i < array.length; i++) {
       const item = array[i];
       const idx = item[index];
+      // eslint-disable-next-line no-prototype-builtins
       if (!map.hasOwnProperty(item[index])) {
         map[idx] = [];
       }

@@ -43,6 +43,7 @@ var array_1 = require("../../utils/array");
 var cart_1 = require("../../utils/cart");
 var SummaryModal_1 = require("../SummaryModal");
 var Modal_1 = require("../common/Modal");
+var Loader_1 = require("../common/Loader");
 var styles_module_css_1 = require("./styles.module.css");
 var Container = function (props) {
     var _a = react_1["default"].useState([]), users = _a[0], setUsers = _a[1];
@@ -107,7 +108,7 @@ var Container = function (props) {
     return (react_1["default"].createElement("div", { className: styles_module_css_1["default"].root },
         react_1["default"].createElement("p", { className: styles_module_css_1["default"].title }, "Santa Claus is coming..."),
         react_1["default"].createElement("p", { onClick: function () { return openModal('help'); } }, "Here you can find your children 's wish list for their Christmas gift. Click here if you have any struggles!"),
-        loading ? (react_1["default"].createElement("div", null, "Loading...")) : (react_1["default"].createElement("div", { className: styles_module_css_1["default"].cartsContainer }, users.map(function (u, i) {
+        loading ? (react_1["default"].createElement(Loader_1["default"], null)) : (react_1["default"].createElement("div", { className: styles_module_css_1["default"].cartsContainer }, users.map(function (u, i) {
             var userName = u.name.firstname + ' ' + u.name.lastname;
             return (react_1["default"].createElement(ChildCart_1["default"], { childId: u.id, childName: userName, key: i, cart: initcarts[u.id], onUpdateCart: function (ncart, isModified) {
                     return onUpdateAllCarts(u.id, ncart, isModified);

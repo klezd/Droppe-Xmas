@@ -2,6 +2,7 @@ import React from 'react';
 
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import {
   IMap,
   _Cart,
@@ -9,10 +10,12 @@ import {
   _ProductInCart,
   _ProductShort
 } from '../../requests/types';
-
 import { getProductById } from '../../requests';
+
 import Tooltip from '../common/Tooltip';
 import ProductLine from '../common/ProductLine';
+import Loader from '../common/Loader';
+
 import styles from './childcart.module.css';
 
 interface _Props {
@@ -170,7 +173,7 @@ const ChildCart = (props: _Props): React.ReactElement => {
         }
       >
         {loading || Object.keys(products).length === 0 ? (
-          <div> Loading</div>
+          <Loader />
         ) : (
           <div>
             {cart.products.map((PIC: _ProductInCart, i: number) => {
