@@ -23,6 +23,7 @@ const Container = (props: _Props): React.ReactElement => {
   const [carts, setCarts] = React.useState<_UserWithCart>({});
   const [loading, setLoading] = React.useState<boolean>(true);
   const [price, setPrice] = React.useState<number>(0);
+  const [normPrice, setNPrice] = React.useState<number>(0);
 
   const [disabledBtn, setdisabledBtn] = React.useState<boolean>(true);
 
@@ -58,8 +59,9 @@ const Container = (props: _Props): React.ReactElement => {
   }
 
   function UpdatePrice(): void {
-    const nprice = GetPriceWithDiscountForCarts(carts);
-    setPrice(nprice);
+    const { discountPrice, normalPrice } = GetPriceWithDiscountForCarts(carts);
+    setPrice(discountPrice);
+    setNPrice(normalPrice);
   }
 
   function openModal(modal: 'summary' | 'help') {
@@ -79,10 +81,10 @@ const Container = (props: _Props): React.ReactElement => {
 
   return (
     <div className={styles.root}>
-      <p className={styles.title}>Welcome to DroppeXmas!</p>
+      <p className={styles.title}>Santa Claus is coming...</p>
       <p onClick={() => openModal('help')}>
         Here you can find your children &apos;s wish list for their Christmas
-        gift. Click here if you need help!
+        gift. Click here if you have any struggles!
       </p>
       {loading ? (
         <div>Loading...</div>
@@ -120,6 +122,7 @@ const Container = (props: _Props): React.ReactElement => {
           closeModal={() => closeModal()}
           cartDetail={carts}
           tprice={price}
+          nprice={normPrice}
           UpdatePrice={() => UpdatePrice()}
         />
       )}
@@ -128,8 +131,10 @@ const Container = (props: _Props): React.ReactElement => {
           display={display === 'help'}
           closeModal={() => closeModal()}
           title="Help"
+          backgroundImage="./christmas-gift.jpg"
+          // textColor="#fff"
           content={
-            <>
+            <div>
               <p>
                 Below is the list of section of each child. Each section can be
                 opened and you can modify their choice.
@@ -150,7 +155,8 @@ const Container = (props: _Props): React.ReactElement => {
                 summary form.
               </p>
               <p>We wish you a happy holiday!</p>
-            </>
+              <p>Merry Christmas</p>
+            </div>
           }
         />
       )}

@@ -6,8 +6,12 @@ import {
 } from './../requests/types';
 import { groupItemsOfArrayByIndex } from './array';
 
-export function GetPriceWithDiscountForCarts(carts: _UserWithCart): number {
+export function GetPriceWithDiscountForCarts(carts: _UserWithCart): {
+  discountPrice: number;
+  normalPrice: number;
+} {
   let price = 0;
+  let nprice = 0;
   let productsInAllCarts: _ProductInCart[] = [];
   Object.values(carts).map((c: _Cart) => {
     productsInAllCarts = productsInAllCarts.concat(c.products);
@@ -25,8 +29,9 @@ export function GetPriceWithDiscountForCarts(carts: _UserWithCart): number {
         singleSetPrice = singleSetPrice + p.quantity * p.productInfo?.price;
     });
     price = price + singleSetPrice - singleSetPrice * discountRate;
+    nprice = nprice + singleSetPrice;
   });
-  return price;
+  return { discountPrice: price, normalPrice: nprice };
 }
 
 const percentDiscount: IMap<number> = {

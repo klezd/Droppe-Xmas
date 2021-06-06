@@ -6,6 +6,7 @@ import styles from './styles.module.css';
 interface _Props {
   cartDetail: _UserWithCart;
   tprice: number;
+  nprice: number;
   loading: boolean;
 }
 
@@ -61,13 +62,17 @@ const SubmittedContent = (props: _Props): React.ReactElement => {
                     }
                   )}
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <td colSpan={3}>Total Payment:</td>
+                    <td>{props.tprice} EUR</td>
+                  </tr>
+                </tfoot>
               </table>
             </div>
           </div>
 
-          <div className={styles.priceLine}>
-            Total Payment: {props.tprice} EUR
-          </div>
+          <div className={styles.priceLine}></div>
         </>
       )}
     </div>

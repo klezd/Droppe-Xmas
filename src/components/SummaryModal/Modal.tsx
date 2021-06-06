@@ -14,10 +14,12 @@ type _Props = {
   UpdatePrice: () => void;
   cartDetail: _UserWithCart;
   tprice: number;
+  nprice: number;
 };
 
 const Modal = (props: _Props): React.ReactElement => {
-  const { display, cartDetail, tprice, closeModal, UpdatePrice } = props;
+  const { display, cartDetail, tprice, nprice, closeModal, UpdatePrice } =
+    props;
 
   const [screen, setScreen] = React.useState<'confirm' | 'submit'>('confirm');
   const [loading, setLoading] = React.useState(false);
@@ -62,12 +64,14 @@ const Modal = (props: _Props): React.ReactElement => {
                 cartDetail={cartDetail}
                 onClose={() => closeModal()}
                 tprice={tprice}
+                nprice={nprice}
               />
             ) : (
               <SubmittedContent
                 loading={loading}
                 tprice={tprice}
                 cartDetail={cartDetail}
+                nprice={nprice}
               />
             )}
           </div>

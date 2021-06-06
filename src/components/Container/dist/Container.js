@@ -51,8 +51,9 @@ var Container = function (props) {
     var _c = react_1["default"].useState({}), carts = _c[0], setCarts = _c[1];
     var _d = react_1["default"].useState(true), loading = _d[0], setLoading = _d[1];
     var _e = react_1["default"].useState(0), price = _e[0], setPrice = _e[1];
-    var _f = react_1["default"].useState(true), disabledBtn = _f[0], setdisabledBtn = _f[1];
-    var _g = react_1["default"].useState(null), display = _g[0], setDisplay = _g[1];
+    var _f = react_1["default"].useState(0), normPrice = _f[0], setNPrice = _f[1];
+    var _g = react_1["default"].useState(true), disabledBtn = _g[0], setdisabledBtn = _g[1];
+    var _h = react_1["default"].useState(null), display = _h[0], setDisplay = _h[1];
     react_1["default"].useEffect(function () {
         if (users.length === 0 || Object.keys(carts).length === 0) {
             requests_1.getAllCarts().then(function (r) { return __awaiter(void 0, void 0, void 0, function () {
@@ -86,8 +87,9 @@ var Container = function (props) {
             setdisabledBtn(false);
     }
     function UpdatePrice() {
-        var nprice = cart_1.GetPriceWithDiscountForCarts(carts);
-        setPrice(nprice);
+        var _a = cart_1.GetPriceWithDiscountForCarts(carts), discountPrice = _a.discountPrice, normalPrice = _a.normalPrice;
+        setPrice(discountPrice);
+        setNPrice(normalPrice);
     }
     function openModal(modal) {
         // Set to prevent scroll on open modal
@@ -103,8 +105,8 @@ var Container = function (props) {
             openModal('summary');
     }
     return (react_1["default"].createElement("div", { className: styles_module_css_1["default"].root },
-        react_1["default"].createElement("p", { className: styles_module_css_1["default"].title }, "Welcome to DroppeXmas!"),
-        react_1["default"].createElement("p", { onClick: function () { return openModal('help'); } }, "Here you can find your children 's wish list for their Christmas gift. Click here if you need help!"),
+        react_1["default"].createElement("p", { className: styles_module_css_1["default"].title }, "Santa Claus is coming..."),
+        react_1["default"].createElement("p", { onClick: function () { return openModal('help'); } }, "Here you can find your children 's wish list for their Christmas gift. Click here if you have any struggles!"),
         loading ? (react_1["default"].createElement("div", null, "Loading...")) : (react_1["default"].createElement("div", { className: styles_module_css_1["default"].cartsContainer }, users.map(function (u, i) {
             var userName = u.name.firstname + ' ' + u.name.lastname;
             return (react_1["default"].createElement(ChildCart_1["default"], { childId: u.id, childName: userName, key: i, cart: initcarts[u.id], onUpdateCart: function (ncart, isModified) {
@@ -113,14 +115,17 @@ var Container = function (props) {
         }))),
         react_1["default"].createElement("div", { className: styles_module_css_1["default"].btnHolder },
             react_1["default"].createElement("div", { className: disabledBtn ? ['submitBtn', 'disabled'].join(' ') : 'submitBtn', onClick: function () { return onGetSummary(); } }, "Get Summary")),
-        display === 'summary' && (react_1["default"].createElement(SummaryModal_1["default"], { display: display === 'summary', closeModal: function () { return closeModal(); }, cartDetail: carts, tprice: price, UpdatePrice: function () { return UpdatePrice(); } })),
-        display === 'help' && (react_1["default"].createElement(Modal_1["default"], { display: display === 'help', closeModal: function () { return closeModal(); }, title: "Help", content: react_1["default"].createElement(react_1["default"].Fragment, null,
+        display === 'summary' && (react_1["default"].createElement(SummaryModal_1["default"], { display: display === 'summary', closeModal: function () { return closeModal(); }, cartDetail: carts, tprice: price, nprice: normPrice, UpdatePrice: function () { return UpdatePrice(); } })),
+        display === 'help' && (react_1["default"].createElement(Modal_1["default"], { display: display === 'help', closeModal: function () { return closeModal(); }, title: "Help", backgroundImage: "./christmas-gift.jpg", 
+            // textColor="#fff"
+            content: react_1["default"].createElement("div", null,
                 react_1["default"].createElement("p", null, "Below is the list of section of each child. Each section can be opened and you can modify their choice."),
                 react_1["default"].createElement("p", null, "Click on each line to select or deselect product."),
                 react_1["default"].createElement("p", null, "Hover on question mark (?) for product description."),
                 react_1["default"].createElement("p", null, "After finish modifying, you can press \"Update cart\" to update your choice. Tap the panel again to close section if needed."),
                 react_1["default"].createElement("p", null, "You will find \"Get Summary\" button at the end of page. Open to view what you have selected."),
                 react_1["default"].createElement("p", null, "Once you ready for payment, choose \"Confirm\" on summary form."),
-                react_1["default"].createElement("p", null, "We wish you a happy holiday!")) }))));
+                react_1["default"].createElement("p", null, "We wish you a happy holiday!"),
+                react_1["default"].createElement("p", null, "Merry Christmas")) }))));
 };
 exports["default"] = Container;

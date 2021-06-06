@@ -10,10 +10,13 @@ type _Props = {
   title: string;
   content: React.ReactElement;
   size?: { width: number | string; height: number | string };
+  backgroundImage?: string;
+  textColor?: string;
 };
 
 const Modal = (props: _Props): React.ReactElement => {
-  const { display, title, content, closeModal } = props;
+  const { display, title, content, backgroundImage, textColor, closeModal } =
+    props;
 
   const modal = (
     <div
@@ -23,15 +26,21 @@ const Modal = (props: _Props): React.ReactElement => {
       id="modalRoot"
     >
       <div className={styles.modal}>
-        <div className={styles.modalHeader}>
-          {title}
+        {backgroundImage && <img src={backgroundImage} />}
+        <div className={styles.modalHeader} style={{ color: textColor }}>
+          <div>{title}</div>
           <span onClick={() => closeModal()}>
             <FontAwesomeIcon icon="times" />
           </span>
         </div>
         <div className={styles.modalContent}>
-          <div>{content}</div>
-          <div className={styles.modalFooter}>
+          <div
+            className={backgroundImage ? styles.contentContainer : ''}
+            style={{ padding: 16 }}
+          >
+            {content}
+          </div>
+          <div className={styles.modalFooter} style={{ color: textColor }}>
             <div className={styles.button} onClick={() => closeModal()}>
               Close
             </div>

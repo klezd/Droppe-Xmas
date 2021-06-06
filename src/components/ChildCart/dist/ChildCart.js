@@ -128,16 +128,17 @@ var ChildCart = function (props) {
     function onUpdateChildCart() {
         if (approvedCart.products.length !== 0) {
             onUpdateCart(approvedCart, true);
-            toggleCollapse();
         }
     }
     return (react_1["default"].createElement("div", { className: childcart_module_css_1["default"].root, key: childName.replaceAll(' ', '_') + "_" + childId, id: childName.replaceAll(' ', '_') + "_" + childId },
         react_1["default"].createElement(Tooltip_1["default"], { element: react_1["default"].createElement("div", { className: panelOpen || approvedCart.products.length !== 0
                     ? [childcart_module_css_1["default"].titleNav, childcart_module_css_1["default"].active].join(' ')
                     : childcart_module_css_1["default"].titleNav, onClick: function () { return toggleCollapse(); } },
-                react_1["default"].createElement("span", null, childName),
+                panelOpen ? (react_1["default"].createElement(react_1["default"].Fragment, null,
+                    "Wish list of ",
+                    childName)) : (react_1["default"].createElement("span", null, childName)),
                 react_1["default"].createElement("span", null,
-                    react_1["default"].createElement(react_fontawesome_1.FontAwesomeIcon, { icon: panelOpen ? free_solid_svg_icons_1.faCaretUp : free_solid_svg_icons_1.faCaretDown }))), description: "Open to view cart", position: { top: 10, left: 200 }, toolTipAction: function () { return toggleCollapse(); } }),
+                    react_1["default"].createElement(react_fontawesome_1.FontAwesomeIcon, { icon: panelOpen ? free_solid_svg_icons_1.faCaretUp : free_solid_svg_icons_1.faCaretDown }))), description: "Open to view cart", position: { top: 10, left: 270 }, toolTipAction: function () { return toggleCollapse(); } }),
         react_1["default"].createElement("div", { className: !panelOpen
                 ? [childcart_module_css_1["default"].contentPanel, childcart_module_css_1["default"].collapse].join(' ')
                 : [childcart_module_css_1["default"].contentPanel, childcart_module_css_1["default"].expand].join(' ') }, loading || Object.keys(products).length === 0 ? (react_1["default"].createElement("div", null, " Loading")) : (react_1["default"].createElement("div", null,

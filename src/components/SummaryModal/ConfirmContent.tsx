@@ -7,11 +7,12 @@ import styles from './styles.module.css';
 interface _Props {
   cartDetail: _UserWithCart;
   tprice: number;
+  nprice: number;
   onClose: () => void;
 }
 
 const ConfirmContent = (props: _Props): React.ReactElement => {
-  const { cartDetail, tprice, onClose } = props;
+  const { cartDetail, nprice, tprice, onClose } = props;
 
   return (
     <div className={styles.contentRoot}>
@@ -54,7 +55,11 @@ const ConfirmContent = (props: _Props): React.ReactElement => {
           </div>
         );
       })}
-      <div className={styles.priceLine}>Total Price: {tprice} EUR</div>
+      <div className={styles.priceLine}>
+        <p>Total Price: {nprice.toFixed(2)} EUR</p>
+        <p>Discounted: {(nprice - tprice).toFixed(2)} EUR </p>
+        <p>Price After Discounted: {tprice.toFixed(2)} EUR</p>
+      </div>
     </div>
   );
 };

@@ -129,7 +129,6 @@ const ChildCart = (props: _Props): React.ReactElement => {
   function onUpdateChildCart(): void {
     if (approvedCart.products.length !== 0) {
       onUpdateCart(approvedCart, true);
-      toggleCollapse();
     }
   }
 
@@ -149,14 +148,18 @@ const ChildCart = (props: _Props): React.ReactElement => {
             }
             onClick={() => toggleCollapse()}
           >
-            <span>{childName}</span>
+            {panelOpen ? (
+              <>Wish list of {childName}</>
+            ) : (
+              <span>{childName}</span>
+            )}
             <span>
               <FontAwesomeIcon icon={panelOpen ? faCaretUp : faCaretDown} />
             </span>
           </div>
         }
         description="Open to view cart"
-        position={{ top: 10, left: 200 }}
+        position={{ top: 10, left: 270 }}
         toolTipAction={() => toggleCollapse()}
       />
       <div

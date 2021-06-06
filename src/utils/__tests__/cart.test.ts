@@ -58,7 +58,11 @@ const cart: _UserWithCart = {
 
 describe('Test: Cart utils', () => {
   test('groupItemsOfArrayByIndex: success with array of object', () => {
-    const res = 123 * 5 * 0.8 + 23 * 2 + 13 * 2;
-    expect(GetPriceWithDiscountForCarts(cart)).toBe(res);
+    const price = 123 * 5 * 0.8 + 23 * 2 + 13 * 2;
+    const nprice = 123 * 5 + 23 * 2 + 13 * 2;
+    expect(GetPriceWithDiscountForCarts(cart)).toBe({
+      discountPrice: price,
+      normalPrice: nprice
+    });
   });
 });
