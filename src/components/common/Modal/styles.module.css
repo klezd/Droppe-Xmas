@@ -88,8 +88,8 @@
 }
 
 .contentContainer {
-  background-color: rgb(199 197 209 / 35%);
   border-radius: 4px;
+  padding: 16px;
 }
 
 .modalFooter {

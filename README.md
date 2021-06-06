@@ -1,6 +1,7 @@
 # Droppe Xmas
 
-Pre-asignment for Droppe
+Pre-asignment for Droppe, hosted on [Heroku](https://droppexmas-klez.herokuapp.com/)
+
 
 ---
 

@@ -9,14 +9,26 @@ type _Props = {
   closeModal: () => void;
   title: string;
   content: React.ReactElement;
+  footer?: React.ReactElement;
   size?: { width: number | string; height: number | string };
   backgroundImage?: string;
   textColor?: string;
+  imageOpacity?: number;
+  contentOpacity?: number;
 };
 
 const Modal = (props: _Props): React.ReactElement => {
-  const { display, title, content, backgroundImage, textColor, closeModal } =
-    props;
+  const {
+    display,
+    title,
+    content,
+    footer,
+    backgroundImage,
+    textColor,
+    imageOpacity,
+    contentOpacity,
+    closeModal
+  } = props;
 
   const modal = (
     <div
@@ -26,7 +38,12 @@ const Modal = (props: _Props): React.ReactElement => {
       id="modalRoot"
     >
       <div className={styles.modal}>
-        {backgroundImage && <img src={backgroundImage} />}
+        {backgroundImage && (
+          <img
+            src={backgroundImage}
+            style={imageOpacity ? { opacity: imageOpacity } : {}}
+          />
+        )}
         <div className={styles.modalHeader} style={{ color: textColor }}>
           <div>{title}</div>
           <span onClick={() => closeModal()}>
@@ -35,16 +52,24 @@ const Modal = (props: _Props): React.ReactElement => {
         </div>
         <div className={styles.modalContent}>
           <div
-            className={backgroundImage ? styles.contentContainer : ''}
-            style={{ padding: 16 }}
+            className={styles.contentContainer}
+            style={
+              contentOpacity
+                ? { backgroundColor: `rgba(199, 197, 209,${contentOpacity})` }
+                : {}
+            }
           >
             {content}
           </div>
-          <div className={styles.modalFooter} style={{ color: textColor }}>
-            <div className={styles.button} onClick={() => closeModal()}>
-              Close
+          {footer ? (
+            <div style={{ color: textColor }}>{footer}</div>
+          ) : (
+            <div className={styles.modalFooter} style={{ color: textColor }}>
+              <div className={styles.button} onClick={() => closeModal()}>
+                Close
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

@@ -132,7 +132,7 @@ const Container = (props: _Props): React.ReactElement => {
           closeModal={() => closeModal()}
           title="Help"
           backgroundImage="./christmas-gift.jpg"
-          // textColor="#fff"
+          contentOpacity={0.35}
           content={
             <div>
               <p>

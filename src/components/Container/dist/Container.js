@@ -116,9 +116,7 @@ var Container = function (props) {
         react_1["default"].createElement("div", { className: styles_module_css_1["default"].btnHolder },
             react_1["default"].createElement("div", { className: disabledBtn ? ['submitBtn', 'disabled'].join(' ') : 'submitBtn', onClick: function () { return onGetSummary(); } }, "Get Summary")),
         display === 'summary' && (react_1["default"].createElement(SummaryModal_1["default"], { display: display === 'summary', closeModal: function () { return closeModal(); }, cartDetail: carts, tprice: price, nprice: normPrice, UpdatePrice: function () { return UpdatePrice(); } })),
-        display === 'help' && (react_1["default"].createElement(Modal_1["default"], { display: display === 'help', closeModal: function () { return closeModal(); }, title: "Help", backgroundImage: "./christmas-gift.jpg", 
-            // textColor="#fff"
-            content: react_1["default"].createElement("div", null,
+        display === 'help' && (react_1["default"].createElement(Modal_1["default"], { display: display === 'help', closeModal: function () { return closeModal(); }, title: "Help", backgroundImage: "./christmas-gift.jpg", contentOpacity: 0.35, content: react_1["default"].createElement("div", null,
                 react_1["default"].createElement("p", null, "Below is the list of section of each child. Each section can be opened and you can modify their choice."),
                 react_1["default"].createElement("p", null, "Click on each line to select or deselect product."),
                 react_1["default"].createElement("p", null, "Hover on question mark (?) for product description."),
