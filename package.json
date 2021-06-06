@@ -26,7 +26,6 @@
     "eject": "react-scripts eject",
     "lint": "eslint **/*.{js,ts,tsx}",
     "lint-fix": "eslint **/*.{js,ts,tsx} --quiet --fix",
-    "pretty-code": "git status -s -u | xargs npx prettier --write",
     "format-all": "prettier --write src/**/*.ts{,x}"
   },
   "eslintConfig": {

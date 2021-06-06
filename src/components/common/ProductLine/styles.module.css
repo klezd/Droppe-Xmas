@@ -1,11 +1,65 @@
+.root {
+  display: flex;
+  align-items: center;
+  margin: 16px 0;
+  height: max-content;
+  padding: 8px;
+  background-color: none;
+}
+
+label[for$='_checkbox'] {
+  width: 30px;
+  height: 100%;
+  position: relative;
+}
+
+.input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0;
+  width: 0;
+  opacity: 0;
+}
+
+.checkbox {
+  position: absolute;
+  top: -10px;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  border-radius: 2px;
+  background-color: rgb(199, 197, 209);
+}
+
+.root:hover .checkbox {
+  background-color: rgb(103 32 44 / 60%);
+  cursor: pointer;
+}
+
+.input:checked ~ .checkbox {
+  background-color: rgb(103, 32, 44);
+}
+
+.root > span {
+  margin-right: 16px;
+}
+
+.root:hover,
+.root.selected {
+  background-color: rgb(103 32 44 / 10%);
+}
+
 .productLine {
   width: 100%;
+  height: auto;
   display: flex;
   align-items: center;
 }
 
-.productLine>div {
+.productLine > div {
   margin: 0 16px;
+  height: 100%;
 }
 
 .productLine img {
@@ -29,7 +83,14 @@
 
 .rightBox {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 10;
+  flex-direction: column;
+}
+
+.rightBox > div {
+  margin: 6px 0;
 }
 
 .productTitle {
@@ -37,7 +98,7 @@
   align-items: baseline;
 }
 
-.productTitle>div {
+.productTitle > div {
   margin-right: 16px;
 }
 
@@ -51,23 +112,31 @@
   margin-bottom: 8px;
 }
 
-label[for^='product_quantity_'] {
+label[for^='product_quantity_']:not([for$='_checkbox']) {
   margin: 4px;
   font-size: 14px;
 }
+input[name^='product_quantity_'] {
+  font-size: 14px;
+  width: 40px;
+  text-align: center;
+}
 
-select[name^='product_quantity_']:disabled,
-select[name^='product_quantity_']:disabled option {
+input[name^='product_quantity_']:disabled {
   color: rgb(103, 32, 44);
-  font-size: 16px;
 }
 
 @media only screen and (max-width: 600px) {
-  .productLine>div {
+  .checkbox {
+    height: 16px;
+    width: 16px;
+    margin-right: 8px;
+  }
+  .productLine > div {
     margin: 0 8px;
   }
 
-  .productTitle>div {
+  .productTitle > div {
     margin-right: 8px;
   }
 
@@ -77,13 +146,23 @@ select[name^='product_quantity_']:disabled option {
     justify-content: flex-start;
   }
 
+  .rightBox {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .rightBox > div {
+    margin: 0;
+  }
+
   label[for^='product_quantity_'] {
     margin: 4px;
     font-size: 12px;
   }
 
-  select[name^='product_quantity_']:disabled,
-  select[name^='product_quantity_']:disabled option {
+  input[name^='product_quantity_'],
+  input[name^='product_quantity_']:disabled {
     color: rgb(103, 32, 44);
     font-size: 12px;
   }

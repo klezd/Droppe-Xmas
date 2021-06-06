@@ -12,6 +12,7 @@ export type _User = {
 export type _Cart = {
   id: number;
   userId: number;
+  userName?: string;
   date: string;
   products: Array<_ProductInCart>;
 };
@@ -23,7 +24,7 @@ export type _UserWithCart = IMap<_Cart>;
 export type _ProductInCart = {
   productId: number;
   quantity: number;
-  price?: number;
+  productInfo?: _ProductShort;
 };
 
 export type _Product = {
@@ -32,6 +33,12 @@ export type _Product = {
   price: number;
   description: string;
   category: string;
+  image: string;
+};
+
+export type _ProductShort = {
+  title: string;
+  price: number;
   image: string;
 };
 

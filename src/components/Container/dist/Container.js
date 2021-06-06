@@ -40,6 +40,9 @@ var react_1 = require("react");
 var ChildCart_1 = require("../ChildCart");
 var requests_1 = require("../../requests");
 var array_1 = require("../../utils/array");
+var cart_1 = require("../../utils/cart");
+var SummaryModal_1 = require("../SummaryModal");
+var Modal_1 = require("../common/Modal");
 var styles_module_css_1 = require("./styles.module.css");
 var Container = function (props) {
     var _a = react_1["default"].useState([]), users = _a[0], setUsers = _a[1];
@@ -48,6 +51,8 @@ var Container = function (props) {
     var _c = react_1["default"].useState({}), carts = _c[0], setCarts = _c[1];
     var _d = react_1["default"].useState(true), loading = _d[0], setLoading = _d[1];
     var _e = react_1["default"].useState(0), price = _e[0], setPrice = _e[1];
+    var _f = react_1["default"].useState(true), disabledBtn = _f[0], setdisabledBtn = _f[1];
+    var _g = react_1["default"].useState(null), display = _g[0], setDisplay = _g[1];
     react_1["default"].useEffect(function () {
         if (users.length === 0 || Object.keys(carts).length === 0) {
             requests_1.getAllCarts().then(function (r) { return __awaiter(void 0, void 0, void 0, function () {
@@ -71,19 +76,51 @@ var Container = function (props) {
         }
         props.setTotalPrice(price);
     }, [price]);
-    function onUpdateAllCarts(userId, cart, newTPrice) {
+    function onUpdateAllCarts(userId, cart, isModified) {
         var newCart = carts;
         newCart[userId] = cart;
         setCarts(newCart);
-        setPrice(price + newTPrice);
+        if (isModified)
+            UpdatePrice();
+        if (disabledBtn && isModified)
+            setdisabledBtn(false);
+    }
+    function UpdatePrice() {
+        var nprice = cart_1.GetPriceWithDiscountForCarts(carts);
+        setPrice(nprice);
+    }
+    function openModal(modal) {
+        // Set to prevent scroll on open modal
+        document.body.style.overflow = 'hidden';
+        setDisplay(modal);
+    }
+    function closeModal() {
+        document.body.style.overflow = 'unset';
+        setDisplay(null);
+    }
+    function onGetSummary() {
+        if (!disabledBtn)
+            openModal('summary');
     }
     return (react_1["default"].createElement("div", { className: styles_module_css_1["default"].root },
+        react_1["default"].createElement("p", { className: styles_module_css_1["default"].title }, "Welcome to DroppeXmas!"),
+        react_1["default"].createElement("p", { onClick: function () { return openModal('help'); } }, "Here you can find your children 's wish list for their Christmas gift. Click here if you need help!"),
         loading ? (react_1["default"].createElement("div", null, "Loading...")) : (react_1["default"].createElement("div", { className: styles_module_css_1["default"].cartsContainer }, users.map(function (u, i) {
             var userName = u.name.firstname + ' ' + u.name.lastname;
-            return (react_1["default"].createElement(ChildCart_1["default"], { childId: u.id, childName: userName, key: i, cart: initcarts[u.id], onUpdateCart: function (ncart, nprice) {
-                    return onUpdateAllCarts(u.id, ncart, nprice);
+            return (react_1["default"].createElement(ChildCart_1["default"], { childId: u.id, childName: userName, key: i, cart: initcarts[u.id], onUpdateCart: function (ncart, isModified) {
+                    return onUpdateAllCarts(u.id, ncart, isModified);
                 } }));
         }))),
-        react_1["default"].createElement("div", { className: styles_module_css_1["default"].btnHolder })));
+        react_1["default"].createElement("div", { className: styles_module_css_1["default"].btnHolder },
+            react_1["default"].createElement("div", { className: disabledBtn ? ['submitBtn', 'disabled'].join(' ') : 'submitBtn', onClick: function () { return onGetSummary(); } }, "Get Summary")),
+        display === 'summary' && (react_1["default"].createElement(SummaryModal_1["default"], { display: display === 'summary', closeModal: function () { return closeModal(); }, cartDetail: carts, tprice: price, UpdatePrice: function () { return UpdatePrice(); } })),
+        display === 'help' && (react_1["default"].createElement(Modal_1["default"], { display: display === 'help', closeModal: function () { return closeModal(); }, title: "Help", content: react_1["default"].createElement(react_1["default"].Fragment, null,
+                react_1["default"].createElement("p", null, "Below is the list of section of each child. Each section can be opened and you can modify their choice."),
+                react_1["default"].createElement("p", null, "Click on each line to select or deselect product."),
+                react_1["default"].createElement("p", null, "Hover on question mark (?) for product description."),
+                react_1["default"].createElement("p", null, "After finish modifying, you can press \"Update cart\" to update your choice. Tap the panel again to close section if needed."),
+                react_1["default"].createElement("p", null, "You will find \"Get Summary\" button at the end of page. Open to view what you have selected."),
+                react_1["default"].createElement("p", null, "Once you ready for payment, choose \"Confirm\" on summary form."),
+                react_1["default"].createElement("p", null, "We wish you a happy holiday!")) }))));
 };
 exports["default"] = Container;

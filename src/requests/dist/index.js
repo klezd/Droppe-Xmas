@@ -1,15 +1,7 @@
 "use strict";
 exports.__esModule = true;
-exports.getProductById = exports.getAllCarts = exports.getAllAvailableUsers = exports.getUserById = void 0;
+exports.updateCart = exports.getProductById = exports.getAllCarts = exports.getAllAvailableUsers = void 0;
 var array_1 = require("../utils/array");
-exports.getUserById = function (id) {
-    return fetch("https://fakestoreapi.com/users/" + id)
-        .then(function (res) { return res.json(); })
-        .then(function (data) {
-        var id = data.id, username = data.username, password = data.password, name = data.name, phone = data.phone;
-        return { id: id, username: username, password: password, name: name, phone: phone };
-    });
-};
 var prepareUserAPI = function (id) {
     return fetch("https://fakestoreapi.com/users/" + id);
 };
@@ -38,5 +30,33 @@ exports.getProductById = function (id) {
         .then(function (data) {
         var id = data.id, title = data.title, price = data.price, description = data.description, category = data.category, image = data.image;
         return { id: id, title: title, price: price, description: description, category: category, image: image };
+    });
+};
+exports.updateCart = function (allCarts) {
+    var userIds = Object.keys(allCarts);
+    var requests = [];
+    userIds.map(function (userId) {
+        var cart = allCarts[userId];
+        var products = cart.products.map(function (p) { return ({
+            productId: p.productId,
+            quantity: p.quantity
+        }); });
+        var cartToUpdate = {
+            userId: userId,
+            date: cart.date,
+            products: products
+        };
+        var req = fetch("https://fakestoreapi.com/carts/" + cart.id, {
+            method: 'PUT',
+            body: JSON.stringify(cartToUpdate)
+        });
+        requests.push(req);
+    });
+    return Promise.all(requests)
+        .then(function (res) {
+        return Promise.all(res.map(function (res) { return res.json(); }));
+    })
+        .then(function (data) {
+        return data;
     });
 };

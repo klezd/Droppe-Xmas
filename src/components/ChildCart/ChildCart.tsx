@@ -2,19 +2,24 @@ import React from 'react';
 
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IMap, _Cart, _Product, _ProductInCart } from '../../requests/types';
+import {
+  IMap,
+  _Cart,
+  _Product,
+  _ProductInCart,
+  _ProductShort
+} from '../../requests/types';
 
 import { getProductById } from '../../requests';
-import styles from './childcart.module.css';
 import Tooltip from '../common/Tooltip';
-import Checkbox from '../common/Checkbox';
-import ProductLine from '../common/ProductLine/ProductLine';
+import ProductLine from '../common/ProductLine';
+import styles from './childcart.module.css';
 
 interface _Props {
   childId: number;
   childName: string;
   cart: _Cart;
-  onUpdateCart: (cart: _Cart, price: number) => void;
+  onUpdateCart: (cart: _Cart, isModified?: boolean) => void;
 }
 
 const ChildCart = (props: _Props): React.ReactElement => {
@@ -30,6 +35,7 @@ const ChildCart = (props: _Props): React.ReactElement => {
   const emptyCart: _Cart = {
     id: cart.id,
     userId: cart.userId,
+    userName: childName,
     date: cart.date,
     products: []
   };
@@ -51,50 +57,81 @@ const ChildCart = (props: _Props): React.ReactElement => {
       }
     });
     setLoading(false);
-  }, [cart]);
+    // Set init state of all cart
+    onUpdateCart(emptyCart);
+  }, []);
 
   function toggleCollapse() {
     setOpen(!panelOpen);
   }
 
-  function onSelectProduct(id: number, quantity: number, pprice: number): void {
+  function onSelectProduct(
+    id: number,
+    quantity: number,
+    pInfo: _ProductShort
+  ): void {
     // This function will select the product in current cart, and add the product to new cart.
-    let currentProductsInCart = approvedCart.products;
-    const totalPPrice = pprice * quantity;
+    const currentProductsInCart = approvedCart.products;
 
     if (currentProductsInCart.some((p) => p.productId === id)) {
-      // cart already has this product
-      // remove from cart and update price
-      currentProductsInCart = currentProductsInCart.filter(
-        (p) => p.productId !== id
-      );
-      setPrice(price - totalPPrice);
+      RemoveProductFromCart(id, quantity, pInfo);
     } else {
-      currentProductsInCart.push({
-        productId: id,
-        quantity,
-        price: totalPPrice
-      });
-      setPrice(price + totalPPrice);
+      AddProductToCart(id, quantity, pInfo);
     }
+  }
 
+  function AddProductToCart(
+    id: number,
+    quantity: number,
+    pInfo: _ProductShort
+  ) {
+    const newInfo: _ProductInCart[] = approvedCart.products;
+
+    newInfo.push({
+      productId: id,
+      quantity,
+      productInfo: pInfo
+    });
+    const totalPPrice = pInfo.price * quantity;
+
+    updateCartWithProduct(newInfo);
+    setPrice(price + totalPPrice);
+  }
+
+  function RemoveProductFromCart(
+    id: number,
+    quantity: number,
+    pInfo: _ProductShort
+  ) {
+    let newInfo: _ProductInCart[] = approvedCart.products;
+
+    const totalPPrice = pInfo.price * quantity;
+    newInfo = newInfo.filter((p) => p.productId !== id);
+
+    updateCartWithProduct(newInfo);
+    setPrice(price - totalPPrice);
+  }
+
+  function updateCartWithProduct(p: _ProductInCart[]) {
     const { userId, date } = cart;
 
     const newCart: _Cart = {
       id: cart.id,
       userId,
+      userName: childName,
       date,
-      products: currentProductsInCart
+      products: p
     };
 
     setApprovedCart(newCart);
   }
 
   function onUpdateChildCart(): void {
-    if (approvedCart.products.length !== 0) onUpdateCart(approvedCart, price);
+    if (approvedCart.products.length !== 0) {
+      onUpdateCart(approvedCart, true);
+      toggleCollapse();
+    }
   }
-
-  if (childId === 1) console.log(cart);
 
   return (
     <div
@@ -106,9 +143,9 @@ const ChildCart = (props: _Props): React.ReactElement => {
         element={
           <div
             className={
-              !panelOpen
-                ? styles.titleNav
-                : [styles.titleNav, styles.active].join(' ')
+              panelOpen || approvedCart.products.length !== 0
+                ? [styles.titleNav, styles.active].join(' ')
+                : styles.titleNav
             }
             onClick={() => toggleCollapse()}
           >
@@ -143,20 +180,19 @@ const ChildCart = (props: _Props): React.ReactElement => {
                     .length === 1;
 
                 return (
-                  <Checkbox
+                  <ProductLine
                     key={`${id}_${i}`}
-                    element={
-                      <ProductLine
-                        id={id}
-                        title={title}
-                        description={description}
-                        quantity={quantity}
-                        price={price}
-                        image={image}
-                      />
+                    divId={`${id}_${i}`}
+                    id={id}
+                    title={title}
+                    description={description}
+                    quantity={quantity}
+                    price={price}
+                    image={image}
+                    isSelected={isChecked}
+                    onSelect={(q) =>
+                      onSelectProduct(id, q, { price, title, image })
                     }
-                    onSelect={() => onSelectProduct(id, quantity, price)}
-                    isChecked={isChecked}
                   />
                 );
               } else {
@@ -164,7 +200,7 @@ const ChildCart = (props: _Props): React.ReactElement => {
               }
             })}
             <div className={styles.bottomPanel}>
-              <div>Total Price : {Number(price).toFixed(2)}</div>
+              <div>Total Price : {Number(price).toFixed(2)} EUR</div>
               <div className={buttonStyle} onClick={onUpdateChildCart}>
                 <span>Update cart</span>
               </div>

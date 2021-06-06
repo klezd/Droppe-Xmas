@@ -6,7 +6,8 @@ import {
   faCopyright,
   faCaretUp,
   faCaretDown,
-  faQuestion
+  faQuestion,
+  faTimes
 } from '@fortawesome/free-solid-svg-icons';
 
 import Header from './components/Header';
@@ -15,7 +16,14 @@ import Container from './components/Container';
 import './App.css';
 import styles from './styles.module.css';
 
-library.add(faShoppingCart, faCopyright, faCaretUp, faCaretDown, faQuestion);
+library.add(
+  faShoppingCart,
+  faCopyright,
+  faCaretUp,
+  faCaretDown,
+  faTimes,
+  faQuestion
+);
 
 const current = new Date();
 const currentYear = current.getFullYear();

@@ -1,5 +1,27 @@
 import { IMap } from './../requests/types';
 
+/**
+ * 
+ * @param array 
+    example: [
+      { id: 1, userId: 1 },
+      { id: 2, userId: 1 },
+      { id: 3, userId: 2 },
+      { id: 4, userId: 3 }
+    ];
+
+ * @param index 
+    example: userId
+ * @returns 
+    example: {
+        '1': [
+          { id: 1, userId: 1 },
+          { id: 2, userId: 1 }
+        ],
+        '2': [{ id: 3, userId: 2 }],
+        '3': [{ id: 4, userId: 3 }]
+      }
+ */
 export function groupItemsOfArrayByIndex(
   array: Array<any>,
   index: string
@@ -21,6 +43,21 @@ export function groupItemsOfArrayByIndex(
   }
 }
 
+/**
+ *
+ * @param object
+ * example: {
+      '1': [],
+      '2': [{ id: 3, userId: 2 }],
+      '3': [{ id: 4, userId: 3 }]
+    }
+
+ * @returns object
+    example: {
+      '2': { id: 3, userId: 2 },
+      '3': { id: 4, userId: 3 }
+    }
+ */
 export function getFirstValueOfItemInObject<T>(
   object: Record<string, Array<T>>
 ): Record<string, T> {

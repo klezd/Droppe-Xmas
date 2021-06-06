@@ -1,18 +1,64 @@
-import { _Cart, _ProductInCart } from './../../requests/types';
-import { getQuantityOfProductFromCart } from '../cart';
+import { _UserWithCart } from './../../requests/types';
+import { GetPriceWithDiscountForCarts } from '../cart';
 
-const cart: _Cart = {
-  date: '2020-03-01T00:00:02.000Z',
-  id: 6,
-  products: [
-    { productId: 18, quantity: 1 },
-    { productId: 1, quantity: 1 }
-  ],
-  userId: 8
+const cart: _UserWithCart = {
+  1: {
+    date: '2020-03-02T00:00:02.000Z',
+    id: 1,
+    products: [
+      {
+        productId: 1,
+        quantity: 4,
+        productInfo: {
+          title: 'Backpack',
+          price: 123,
+          image: 'anylink'
+        }
+      },
+      {
+        productId: 2,
+        quantity: 2,
+        productInfo: {
+          title: 'Shirt',
+          price: 13,
+          image: 'anylink'
+        }
+      }
+    ],
+    userId: 1,
+    userName: 'john doe'
+  },
+  2: {
+    date: '2020-03-02T00:00:02.000Z',
+    id: 2,
+    products: [
+      {
+        productId: 1,
+        quantity: 1,
+        productInfo: {
+          title: 'Backpack',
+          price: 123,
+          image: 'anylink'
+        }
+      },
+      {
+        productId: 3,
+        quantity: 2,
+        productInfo: {
+          title: 'Shirt',
+          price: 23,
+          image: 'anylink'
+        }
+      }
+    ],
+    userId: 2,
+    userName: 'john'
+  }
 };
 
-describe('Test: Array utils', () => {
-  test('getQuantityOfProductFromCart', () => {
-    expect(getQuantityOfProductFromCart(cart, 18)).toStrictEqual(1);
+describe('Test: Cart utils', () => {
+  test('groupItemsOfArrayByIndex: success with array of object', () => {
+    const res = 123 * 5 * 0.8 + 23 * 2 + 13 * 2;
+    expect(GetPriceWithDiscountForCarts(cart)).toBe(res);
   });
 });

@@ -8,5 +8,40 @@
 .root > div {
   width: inherit;
 }
-.cartsContainer {
+.title {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.root>p {
+  margin: 12px;
+}
+
+.root>p:hover {
+  cursor: pointer;
+}
+
+.btnHolder {
+  margin: 12px;
+  padding: 0 12px;
+}
+
+.btnHolder > div {
+  margin: auto;
+  font-size: 18px !important;
+  box-shadow: 0px 0px 0px 4px rgb(47 8 13 / 30%),
+    inset 0px 0 0 2px rgb(47 8 13 / 30%), 0px 0px 0px 5px rgb(47 8 13 / 30%);
+}
+
+@media only screen and (max-width: 1201px) {
+  .btnHolder > div {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .btnHolder > div {
+    width: 100%;
+    padding: 12px;
+  }
 }

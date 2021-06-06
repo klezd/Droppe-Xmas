@@ -23,3 +23,8 @@ npm run format-all
 ```
 
 Pretty all dirty code
+
+```
+npm run test
+```
+Run all tests available (currently, only unit test of utils are available)

@@ -2,8 +2,9 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
+import Tooltip from '../common/Tooltip';
+
 import styles from './styles.module.css';
-import Tooltip from '../common/Tooltip/Tooltip';
 
 type _Props = {
   ref?: any;

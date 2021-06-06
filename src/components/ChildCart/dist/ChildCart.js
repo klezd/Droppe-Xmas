@@ -40,10 +40,9 @@ var react_1 = require("react");
 var free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
 var react_fontawesome_1 = require("@fortawesome/react-fontawesome");
 var requests_1 = require("../../requests");
-var childcart_module_css_1 = require("./childcart.module.css");
 var Tooltip_1 = require("../common/Tooltip");
-var Checkbox_1 = require("../common/Checkbox");
-var ProductLine_1 = require("../common/ProductLine/ProductLine");
+var ProductLine_1 = require("../common/ProductLine");
+var childcart_module_css_1 = require("./childcart.module.css");
 var ChildCart = function (props) {
     var childId = props.childId, childName = props.childName, cart = props.cart, onUpdateCart = props.onUpdateCart;
     var _a = react_1["default"].useState(false), panelOpen = _a[0], setOpen = _a[1];
@@ -53,6 +52,7 @@ var ChildCart = function (props) {
     var emptyCart = {
         id: cart.id,
         userId: cart.userId,
+        userName: childName,
         date: cart.date,
         products: []
     };
@@ -80,47 +80,61 @@ var ChildCart = function (props) {
             });
         }); });
         setLoading(false);
-    }, [cart]);
+        // Set init state of all cart
+        onUpdateCart(emptyCart);
+    }, []);
     function toggleCollapse() {
         setOpen(!panelOpen);
     }
-    function onSelectProduct(id, quantity, pprice) {
+    function onSelectProduct(id, quantity, pInfo) {
         // This function will select the product in current cart, and add the product to new cart.
         var currentProductsInCart = approvedCart.products;
-        var totalPPrice = pprice * quantity;
         if (currentProductsInCart.some(function (p) { return p.productId === id; })) {
-            // cart already has this product
-            // remove from cart and update price
-            currentProductsInCart = currentProductsInCart.filter(function (p) { return p.productId !== id; });
-            setPrice(price - totalPPrice);
+            RemoveProductFromCart(id, quantity, pInfo);
         }
         else {
-            currentProductsInCart.push({
-                productId: id,
-                quantity: quantity,
-                price: totalPPrice
-            });
-            setPrice(price + totalPPrice);
+            AddProductToCart(id, quantity, pInfo);
         }
+    }
+    function AddProductToCart(id, quantity, pInfo) {
+        var newInfo = approvedCart.products;
+        newInfo.push({
+            productId: id,
+            quantity: quantity,
+            productInfo: pInfo
+        });
+        var totalPPrice = pInfo.price * quantity;
+        updateCartWithProduct(newInfo);
+        setPrice(price + totalPPrice);
+    }
+    function RemoveProductFromCart(id, quantity, pInfo) {
+        var newInfo = approvedCart.products;
+        var totalPPrice = pInfo.price * quantity;
+        newInfo = newInfo.filter(function (p) { return p.productId !== id; });
+        updateCartWithProduct(newInfo);
+        setPrice(price - totalPPrice);
+    }
+    function updateCartWithProduct(p) {
         var userId = cart.userId, date = cart.date;
         var newCart = {
             id: cart.id,
             userId: userId,
+            userName: childName,
             date: date,
-            products: currentProductsInCart
+            products: p
         };
         setApprovedCart(newCart);
     }
     function onUpdateChildCart() {
-        if (approvedCart.products.length !== 0)
-            onUpdateCart(approvedCart, price);
+        if (approvedCart.products.length !== 0) {
+            onUpdateCart(approvedCart, true);
+            toggleCollapse();
+        }
     }
-    if (childId === 1)
-        console.log(cart);
     return (react_1["default"].createElement("div", { className: childcart_module_css_1["default"].root, key: childName.replaceAll(' ', '_') + "_" + childId, id: childName.replaceAll(' ', '_') + "_" + childId },
-        react_1["default"].createElement(Tooltip_1["default"], { element: react_1["default"].createElement("div", { className: !panelOpen
-                    ? childcart_module_css_1["default"].titleNav
-                    : [childcart_module_css_1["default"].titleNav, childcart_module_css_1["default"].active].join(' '), onClick: function () { return toggleCollapse(); } },
+        react_1["default"].createElement(Tooltip_1["default"], { element: react_1["default"].createElement("div", { className: panelOpen || approvedCart.products.length !== 0
+                    ? [childcart_module_css_1["default"].titleNav, childcart_module_css_1["default"].active].join(' ')
+                    : childcart_module_css_1["default"].titleNav, onClick: function () { return toggleCollapse(); } },
                 react_1["default"].createElement("span", null, childName),
                 react_1["default"].createElement("span", null,
                     react_1["default"].createElement(react_fontawesome_1.FontAwesomeIcon, { icon: panelOpen ? free_solid_svg_icons_1.faCaretUp : free_solid_svg_icons_1.faCaretDown }))), description: "Open to view cart", position: { top: 10, left: 200 }, toolTipAction: function () { return toggleCollapse(); } }),
@@ -129,11 +143,13 @@ var ChildCart = function (props) {
                 : [childcart_module_css_1["default"].contentPanel, childcart_module_css_1["default"].expand].join(' ') }, loading || Object.keys(products).length === 0 ? (react_1["default"].createElement("div", null, " Loading")) : (react_1["default"].createElement("div", null,
             cart.products.map(function (PIC, i) {
                 if (products[PIC.productId]) {
-                    var _a = products[PIC.productId], id_1 = _a.id, title = _a.title, price_1 = _a.price, description = _a.description, image = _a.image;
-                    var quantity_1 = PIC.quantity;
+                    var _a = products[PIC.productId], id_1 = _a.id, title_1 = _a.title, price_1 = _a.price, description = _a.description, image_1 = _a.image;
+                    var quantity = PIC.quantity;
                     var isChecked = approvedCart.products.filter(function (p) { return p.productId === id_1; })
                         .length === 1;
-                    return (react_1["default"].createElement(Checkbox_1["default"], { key: id_1 + "_" + i, element: react_1["default"].createElement(ProductLine_1["default"], { id: id_1, title: title, description: description, quantity: quantity_1, price: price_1, image: image }), onSelect: function () { return onSelectProduct(id_1, quantity_1, price_1); }, isChecked: isChecked }));
+                    return (react_1["default"].createElement(ProductLine_1["default"], { key: id_1 + "_" + i, divId: id_1 + "_" + i, id: id_1, title: title_1, description: description, quantity: quantity, price: price_1, image: image_1, isSelected: isChecked, onSelect: function (q) {
+                            return onSelectProduct(id_1, q, { price: price_1, title: title_1, image: image_1 });
+                        } }));
                 }
                 else {
                     return react_1["default"].createElement(react_1["default"].Fragment, null);
@@ -142,7 +158,8 @@ var ChildCart = function (props) {
             react_1["default"].createElement("div", { className: childcart_module_css_1["default"].bottomPanel },
                 react_1["default"].createElement("div", null,
                     "Total Price : ",
-                    Number(price).toFixed(2)),
+                    Number(price).toFixed(2),
+                    " EUR"),
                 react_1["default"].createElement("div", { className: buttonStyle, onClick: onUpdateChildCart },
                     react_1["default"].createElement("span", null, "Update cart"))))))));
 };

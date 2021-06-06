@@ -1,14 +1,12 @@
-import { _User, _Product, _UserWithCarts } from './types';
+import {
+  _User,
+  _Product,
+  _UserWithCart,
+  _UserWithCarts,
+  _Cart,
+  _ProductInCart
+} from './types';
 import { groupItemsOfArrayByIndex } from '../utils/array';
-
-export const getUserById = (id: number): Promise<_User> => {
-  return fetch(`https://fakestoreapi.com/users/${id}`)
-    .then((res) => res.json())
-    .then((data) => {
-      const { id, username, password, name, phone } = data;
-      return { id, username, password, name, phone };
-    });
-};
 
 const prepareUserAPI = (id: number | string) =>
   fetch(`https://fakestoreapi.com/users/${id}`);
@@ -45,5 +43,36 @@ export const getProductById = (id: number): Promise<_Product> => {
     .then((data) => {
       const { id, title, price, description, category, image } = data;
       return { id, title, price, description, category, image };
+    });
+};
+
+export const updateCart = (
+  allCarts: _UserWithCart
+): /* Promise<_Cart> */ any => {
+  const userIds = Object.keys(allCarts);
+  const requests: Promise<Response>[] = [];
+  userIds.map((userId: string) => {
+    const cart: _Cart = allCarts[userId];
+    const products = cart.products.map((p: _ProductInCart) => ({
+      productId: p.productId,
+      quantity: p.quantity
+    }));
+    const cartToUpdate = {
+      userId,
+      date: cart.date,
+      products
+    };
+    const req = fetch(`https://fakestoreapi.com/carts/${cart.id}`, {
+      method: 'PUT',
+      body: JSON.stringify(cartToUpdate)
+    });
+    requests.push(req);
+  });
+  return Promise.all(requests)
+    .then((res) => {
+      return Promise.all(res.map((res) => res.json()));
+    })
+    .then((data) => {
+      return data;
     });
 };
