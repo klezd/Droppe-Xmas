@@ -31,6 +31,8 @@ const Container = (props: _Props): React.ReactElement => {
 
   const [display, setDisplay] = React.useState<'summary' | 'help' | null>(null);
 
+  const [helpText, setHelpText] = React.useState('');
+
   React.useEffect(() => {
     if (users.length === 0 || Object.keys(carts).length === 0) {
       getAllCarts().then(async (r) => {
@@ -78,7 +80,12 @@ const Container = (props: _Props): React.ReactElement => {
   }
 
   function onGetSummary() {
-    if (!disabledBtn) openModal('summary');
+    if (!disabledBtn) {
+      openModal('summary');
+      setHelpText('');
+    } else {
+      setHelpText('Add at least one product from your child wish list to view');
+    }
   }
 
   return (
@@ -109,6 +116,9 @@ const Container = (props: _Props): React.ReactElement => {
         </div>
       )}
       <div className={styles.btnHolder}>
+        {helpText.length > 0 && (
+          <div className={styles.helpText}>{helpText}</div>
+        )}
         <div
           className={
             disabledBtn ? ['submitBtn', 'disabled'].join(' ') : 'submitBtn'
@@ -142,15 +152,22 @@ const Container = (props: _Props): React.ReactElement => {
                 opened and you can modify their choice.
               </p>
               <p>Click on each line to select or deselect product.</p>
-              <p>Hover on question mark (?) for product description.</p>
               <p>
-                After finish modifying, you can press &quot;Update cart&quot; to
-                update your choice. Tap the panel again to close section if
-                needed.
+                Hover on question mark <b>?</b> for product description.
               </p>
               <p>
-                You will find &quot;Get Summary&quot; button at the end of page.
-                Open to view what you have selected.
+                After finish modifying, you can press{' '}
+                <b>&quot;Update cart&quot;</b> to update your choice. Tap the
+                panel again to close section if needed.
+              </p>
+              <p>
+                You will find <b>&quot;Get Summary&quot;</b> button at the end
+                of page. Open to view what you have selected.
+              </p>
+              <p>Choose more to get more discount.</p>
+              <p>
+                <b>Note:</b> You will get discount when there are <b>same</b>{' '}
+                products are chosen for different child
               </p>
               <p>
                 Once you ready for payment, choose &quot;Confirm&quot; on

@@ -149,12 +149,12 @@ var ChildCart = function (props) {
                     var quantity = PIC.quantity;
                     var isChecked = approvedCart.products.filter(function (p) { return p.productId === id_1; })
                         .length === 1;
-                    return (react_1["default"].createElement(ProductLine_1["default"], { key: id_1 + "_" + i, divId: id_1 + "_" + i, id: id_1, title: title_1, description: description, quantity: quantity, price: price_1, image: image_1, isSelected: isChecked, onSelect: function (q) {
+                    return (react_1["default"].createElement(ProductLine_1["default"], { key: id_1 + "_" + i, divKey: id_1 + "_" + i, divId: id_1 + "_" + i, id: id_1, title: title_1, description: description, quantity: quantity, price: price_1, image: image_1, isSelected: isChecked, onSelect: function (q) {
                             return onSelectProduct(id_1, q, { price: price_1, title: title_1, image: image_1 });
                         } }));
                 }
                 else {
-                    return react_1["default"].createElement(react_1["default"].Fragment, null);
+                    return (react_1["default"].createElement(react_1["default"].Fragment, { key: "product_loading_" + PIC.productId + "_" + i }));
                 }
             }),
             react_1["default"].createElement("div", { className: childcart_module_css_1["default"].bottomPanel },

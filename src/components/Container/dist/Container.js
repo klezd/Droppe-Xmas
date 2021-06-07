@@ -55,6 +55,7 @@ var Container = function (props) {
     var _f = react_1["default"].useState(0), normPrice = _f[0], setNPrice = _f[1];
     var _g = react_1["default"].useState(true), disabledBtn = _g[0], setdisabledBtn = _g[1];
     var _h = react_1["default"].useState(null), display = _h[0], setDisplay = _h[1];
+    var _j = react_1["default"].useState(''), helpText = _j[0], setHelpText = _j[1];
     react_1["default"].useEffect(function () {
         if (users.length === 0 || Object.keys(carts).length === 0) {
             requests_1.getAllCarts().then(function (r) { return __awaiter(void 0, void 0, void 0, function () {
@@ -102,8 +103,13 @@ var Container = function (props) {
         setDisplay(null);
     }
     function onGetSummary() {
-        if (!disabledBtn)
+        if (!disabledBtn) {
             openModal('summary');
+            setHelpText('');
+        }
+        else {
+            setHelpText('Add at least one product from your child wish list to view');
+        }
     }
     return (react_1["default"].createElement("div", { className: styles_module_css_1["default"].root },
         react_1["default"].createElement("p", { className: styles_module_css_1["default"].title }, "Santa Claus is coming..."),
@@ -115,14 +121,32 @@ var Container = function (props) {
                 } }));
         }))),
         react_1["default"].createElement("div", { className: styles_module_css_1["default"].btnHolder },
+            helpText.length > 0 && (react_1["default"].createElement("div", { className: styles_module_css_1["default"].helpText }, helpText)),
             react_1["default"].createElement("div", { className: disabledBtn ? ['submitBtn', 'disabled'].join(' ') : 'submitBtn', onClick: function () { return onGetSummary(); } }, "Get Summary")),
         display === 'summary' && (react_1["default"].createElement(SummaryModal_1["default"], { display: display === 'summary', closeModal: function () { return closeModal(); }, cartDetail: carts, tprice: price, nprice: normPrice, UpdatePrice: function () { return UpdatePrice(); } })),
         display === 'help' && (react_1["default"].createElement(Modal_1["default"], { display: display === 'help', closeModal: function () { return closeModal(); }, title: "Help", backgroundImage: "./christmas-gift.jpg", contentOpacity: 0.35, content: react_1["default"].createElement("div", null,
                 react_1["default"].createElement("p", null, "Below is the list of section of each child. Each section can be opened and you can modify their choice."),
                 react_1["default"].createElement("p", null, "Click on each line to select or deselect product."),
-                react_1["default"].createElement("p", null, "Hover on question mark (?) for product description."),
-                react_1["default"].createElement("p", null, "After finish modifying, you can press \"Update cart\" to update your choice. Tap the panel again to close section if needed."),
-                react_1["default"].createElement("p", null, "You will find \"Get Summary\" button at the end of page. Open to view what you have selected."),
+                react_1["default"].createElement("p", null,
+                    "Hover on question mark ",
+                    react_1["default"].createElement("b", null, "?"),
+                    " for product description."),
+                react_1["default"].createElement("p", null,
+                    "After finish modifying, you can press",
+                    ' ',
+                    react_1["default"].createElement("b", null, "\"Update cart\""),
+                    " to update your choice. Tap the panel again to close section if needed."),
+                react_1["default"].createElement("p", null,
+                    "You will find ",
+                    react_1["default"].createElement("b", null, "\"Get Summary\""),
+                    " button at the end of page. Open to view what you have selected."),
+                react_1["default"].createElement("p", null, "Choose more to get more discount."),
+                react_1["default"].createElement("p", null,
+                    react_1["default"].createElement("b", null, "Note:"),
+                    " You will get discount when there are ",
+                    react_1["default"].createElement("b", null, "same"),
+                    ' ',
+                    "products are chosen for different child"),
                 react_1["default"].createElement("p", null, "Once you ready for payment, choose \"Confirm\" on summary form."),
                 react_1["default"].createElement("p", null, "We wish you a happy holiday!"),
                 react_1["default"].createElement("p", null, "Merry Christmas")) }))));

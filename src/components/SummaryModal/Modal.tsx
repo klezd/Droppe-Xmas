@@ -86,6 +86,7 @@ const SummaryModal = (props: _Props): React.ReactElement => {
       imageOpacity={0.8}
       contentOpacity={0.7}
       textColor="#fff"
+      contentFallbackBg="rgba(103, 32, 44, 0.7)"
     />
   );
 

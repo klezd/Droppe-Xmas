@@ -33,6 +33,12 @@ const Header = (props: _Props): React.ReactElement => {
     };
   }, [onScroll]);
 
+  React.useEffect(() => {
+    if (window.scrollY > 75) {
+      setHeaderStyle([styles.header, styles.headerUp].join(' '));
+    }
+  }, []);
+
   const cartSummary = props.price
     ? `Total price: ${props.price} EUR`
     : 'Cart is empty';

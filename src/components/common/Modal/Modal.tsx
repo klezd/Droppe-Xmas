@@ -15,6 +15,7 @@ type _Props = {
   textColor?: string;
   imageOpacity?: number;
   contentOpacity?: number;
+  contentFallbackBg?: string;
 };
 
 const Modal = (props: _Props): React.ReactElement => {
@@ -27,6 +28,7 @@ const Modal = (props: _Props): React.ReactElement => {
     textColor,
     imageOpacity,
     contentOpacity,
+    contentFallbackBg,
     closeModal
   } = props;
 
@@ -37,7 +39,10 @@ const Modal = (props: _Props): React.ReactElement => {
       }
       id="modalRoot"
     >
-      <div className={styles.modal}>
+      <div
+        className={styles.modal}
+        style={contentFallbackBg ? { background: contentFallbackBg } : {}}
+      >
         {backgroundImage && (
           <img
             src={backgroundImage}

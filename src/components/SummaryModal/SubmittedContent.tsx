@@ -65,8 +65,18 @@ const SubmittedContent = (props: _Props): React.ReactElement => {
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={3}>Total Payment:</td>
-                    <td>{props.tprice} EUR</td>
+                    <td colSpan={3}>Total</td>
+                    <td>{props.nprice} EUR</td>
+                  </tr>
+                  <tr>
+                    <td colSpan={3}>Discounted</td>
+                    <td>{(props.nprice - props.tprice).toFixed(2)} EUR</td>
+                  </tr>
+                  <tr>
+                    <td colSpan={3}>Total Payment</td>
+                    <td>
+                      <b>{props.tprice}</b> EUR
+                    </td>
                   </tr>
                 </tfoot>
               </table>

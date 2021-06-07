@@ -7,6 +7,7 @@ import Tooltip from '../Tooltip';
 interface _Props {
   id: number;
   divId: string;
+  divKey?: string;
   title?: string;
   price?: number;
   description?: string;
@@ -28,7 +29,8 @@ const ProductLine = (props: _Props): React.ReactElement => {
     isSelected,
     onSelect,
     inShort,
-    divId
+    divId,
+    divKey
   } = props;
 
   const initLocalCheck = isSelected ? isSelected : false;
@@ -50,6 +52,7 @@ const ProductLine = (props: _Props): React.ReactElement => {
       }
       onClick={() => onLocalSelect()}
       id={divId}
+      key={divKey ? divKey : `${divId}_key`}
     >
       {onSelect && (
         <label htmlFor={`product_quantity_${id}_checkbox`}>
@@ -67,7 +70,13 @@ const ProductLine = (props: _Props): React.ReactElement => {
       )}
 
       <div className={styles.productLine}>
-        {image && <img src={image} style={imgStyle} />}
+        {image && (
+          <img
+            src={image}
+            style={Object.assign(imgStyle, { fontSize: 11 })}
+            alt={title?.slice(0, 10) + '...'}
+          />
+        )}
         <div className={styles.productDescription}>
           <div className={styles.leftBox}>
             <div className={styles.productTitle}>

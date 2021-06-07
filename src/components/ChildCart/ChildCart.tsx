@@ -188,6 +188,7 @@ const ChildCart = (props: _Props): React.ReactElement => {
                 return (
                   <ProductLine
                     key={`${id}_${i}`}
+                    divKey={`${id}_${i}`}
                     divId={`${id}_${i}`}
                     id={id}
                     title={title}
@@ -202,7 +203,11 @@ const ChildCart = (props: _Props): React.ReactElement => {
                   />
                 );
               } else {
-                return <></>;
+                return (
+                  <React.Fragment
+                    key={`product_loading_${PIC.productId}_${i}`}
+                  />
+                );
               }
             })}
             <div className={styles.bottomPanel}>
