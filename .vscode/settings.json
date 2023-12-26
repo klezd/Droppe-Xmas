@@ -4,7 +4,7 @@
   "eslint.run": "onSave",
   "editor.formatOnPaste": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll": true
+    "source.fixAll": "explicit"
   },
   "eslint.alwaysShowStatus": true,
   "compile-hero.disable-compile-files-on-did-save-code": false,
